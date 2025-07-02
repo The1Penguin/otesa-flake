@@ -12,9 +12,13 @@
       url = "github:jrouwe/JoltPhysics?ref=tags/v5.3.0";
       flake = false;
     };
+    eawpats = {
+      url = "https://github.com/afritz1/OpenTESArena/releases/download/opentesarena-0.1.0/eawpats.tar.gz";
+      flake = false;
+    };
   };
 
-  outputs = inputs@{ nixpkgs, flake-parts, otesa, JoltPhysics, ... }:
+  outputs = inputs@{ nixpkgs, flake-parts, otesa, JoltPhysics, eawpats, ... }:
     flake-parts.lib.mkFlake {inherit inputs;} {
       systems = [
         "x86_64-linux"
@@ -42,11 +46,14 @@
                           sha256 = "sha256-g9Qakm3ZU/IytEKlPqF4e9OUdcywn1blMA4Or7RLmMM=";
                           stripRoot = false;
                         });
+          eawpats_SRC = eawpats;
           enableParallelBuilding = true;
 
           buildPhase = ''
             cp $Arena_SRC/Arena106.exe .
             unrar x Arena106.exe data/
+            mkdir data/eawpats
+            cp -r $eawpats_SRC/* data/eawpats/.
             make -j $NIX_BUILD_CORES
           '';
 

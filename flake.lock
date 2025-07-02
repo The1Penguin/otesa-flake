@@ -17,6 +17,19 @@
         "type": "github"
       }
     },
+    "eawpats": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1477927174,
+        "narHash": "sha256-SES/5t8wTltD10g7vkhZVgZAYQxQqs3KIUVnDS+J9TM=",
+        "type": "tarball",
+        "url": "https://github.com/afritz1/OpenTESArena/releases/download/opentesarena-0.1.0/eawpats.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://github.com/afritz1/OpenTESArena/releases/download/opentesarena-0.1.0/eawpats.tar.gz"
+      }
+    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": "nixpkgs-lib"
@@ -85,6 +98,7 @@
     "root": {
       "inputs": {
         "JoltPhysics": "JoltPhysics",
+        "eawpats": "eawpats",
         "flake-parts": "flake-parts",
         "nixpkgs": "nixpkgs",
         "otesa": "otesa"
