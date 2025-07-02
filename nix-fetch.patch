@@ -1,0 +1,44 @@
+From c9486235d36f21ff5613201fef7c8157b2644fa3 Mon Sep 17 00:00:00 2001
+From: pingu <nor@acorneroftheweb.com>
+Date: Tue, 1 Jul 2025 23:53:13 +0200
+Subject: [PATCH] Allow local fetch
+
+---
+ CMakeLists.txt | 21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 65df1c69..e98a14c3 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -86,11 +86,22 @@ ADD_COMPILE_DEFINITIONS(JPH_NO_FORCE_INLINE) # Fix __forceinline compile error i
+ ADD_COMPILE_DEFINITIONS(JPH_DEBUG_RENDERER) # Enable Jolt Physics debug rendering in all builds.
+ 
+ # Include Jolt
+-FetchContent_Declare(
+-    JoltPhysics
+-    GIT_REPOSITORY "https://github.com/jrouwe/JoltPhysics"
+-    GIT_TAG 0373ec0dd762e4bc2f6acdb08371ee84fa23c6db # 5.3.0
+-    SOURCE_SUBDIR "Build")
++if (DEFINED ENV{JoltPhysics_SRC})
++    message("Fetching JoltPhysics source from env var: $ENV{JoltPhysics_SRC}")
++    FetchContent_Declare(
++        JoltPhysics
++        SOURCE_DIR "$ENV{JoltPhysics_SRC}"
++        SOURCE_SUBDIR "Build"
++    )
++else ()
++    message("Fetching corrosion source from git")
++    FetchContent_Declare(
++        JoltPhysics
++        GIT_REPOSITORY "https://github.com/jrouwe/JoltPhysics"
++        GIT_TAG 0373ec0dd762e4bc2f6acdb08371ee84fa23c6db # 5.3.0
++        SOURCE_SUBDIR "Build"
++    )
++endif ()
+ FetchContent_MakeAvailable(JoltPhysics)
+ 
+ ADD_SUBDIRECTORY(components)
+-- 
+2.49.0
+
